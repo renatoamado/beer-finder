@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Livewire\Beers\Index;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -32,4 +35,7 @@ Route::middleware(['auth'])->group(function () {
             ),
         )
         ->name('two-factor.show');
+
+    Route::get('beers', Index::class)->name('beers.index');
+    Route::get('beers/create', function () {})->name('beers.create');
 });
