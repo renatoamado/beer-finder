@@ -2,6 +2,7 @@
 @import '../../vendor/livewire/flux/dist/flux.css';
 
 @source '../views';
+@source '../views/vendor/livewire/*.blade.php';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
@@ -43,7 +44,7 @@
     ::before,
     ::backdrop,
     ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
+        border-color: var(--color-zinc-200, currentColor);
     }
 }
 

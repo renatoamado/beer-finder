@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Livewire\Beers\Create;
 use App\Livewire\Beers\Index;
+use App\Livewire\Beers\Update;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -10,15 +12,13 @@ use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', fn (): Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View => view('welcome'))->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function (): void {
     Route::redirect('settings', 'settings/profile');
 
     Route::get('settings/profile', Profile::class)->name('profile.edit');
@@ -37,5 +37,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('two-factor.show');
 
     Route::get('beers', Index::class)->name('beers.index');
-    Route::get('beers/create', function () {})->name('beers.create');
+    Route::get('beers/create', Create::class)->name('beers.create');
+    Route::get('beers/{beer}', Update::class)->name('beers.update');
 });

@@ -23,6 +23,9 @@ final class CatalogItem extends Model
         'store_id' => 'integer',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);

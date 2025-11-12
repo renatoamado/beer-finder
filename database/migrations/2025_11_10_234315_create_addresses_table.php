@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('addresses', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('store_id')->constrained()->cascadeOnDelete();
             $table->string('zip_code', 20);
@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('neighborhood');
             $table->string('city');
             $table->string('state', 100);
-            $table->string('latitude', 10, 7)->nullable();
-            $table->string('longitude', 10, 7)->nullable();
+            $table->string('latitude', 10)->nullable();
+            $table->string('longitude', 10)->nullable();
             $table->timestamps();
         });
     }

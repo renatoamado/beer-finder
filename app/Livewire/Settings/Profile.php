@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Settings;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -19,19 +19,18 @@ final class Profile extends Component
     /**
      * Mount the component.
      */
-    public function mount(): void
+    public function mount(#[CurrentUser] User $user): void
     {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
+        $this->name = $user->name;
+        $this->email = $user->email;
     }
 
     /**
      * Update the profile information for the currently authenticated user.
      */
-    public function updateProfileInformation(): void
+    public function updateProfileInformation(#[CurrentUser] User $user): void
     {
-        $user = Auth::user();
-
+        /** @var array<string, mixed> $validated */
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
 
@@ -59,10 +58,8 @@ final class Profile extends Component
     /**
      * Send an email verification notification to the current user.
      */
-    public function resendVerificationNotification(): void
+    public function resendVerificationNotification(#[CurrentUser] User $user): void
     {
-        $user = Auth::user();
-
         if ($user->hasVerifiedEmail()) {
             $this->redirectIntended(default: route('dashboard', absolute: false));
 

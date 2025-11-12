@@ -26,6 +26,9 @@ final class Address extends Model
         'longitude' => 'decimal:7',
     ];
 
+    /**
+     * @return BelongsTo<Store, $this>
+     */
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);

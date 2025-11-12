@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\BeerFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -11,6 +13,9 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 final class Beer extends Model
 {
+    /** @use HasFactory<BeerFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'tagline',
@@ -34,6 +39,9 @@ final class Beer extends Model
         'volume' => 'integer',
     ];
 
+    /**
+     * @return BelongsToMany<Store, $this, BeerStore, 'pivot'>
+     */
     public function stores(): BelongsToMany
     {
         return $this->belongsToMany(Store::class)
@@ -42,11 +50,17 @@ final class Beer extends Model
             ->withTimestamps();
     }
 
+    /**
+     * @return MorphMany<Image, $this>
+     */
     public function images(): MorphMany
     {
         return $this->morphMany(Image::class, 'imageable');
     }
 
+    /**
+     * @return MorphOne<Image, $this>
+     */
     public function cover(): MorphOne
     {
         return $this->morphOne(Image::class, 'imageable')

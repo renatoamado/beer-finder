@@ -20,6 +20,9 @@ final class Image extends Model
         'is_cover' => 'boolean',
     ];
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function imageable(): MorphTo
     {
         return $this->morphTo();
