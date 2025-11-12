@@ -9,17 +9,21 @@ use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 
 final class Create extends Component
 {
     public BeerForm $form;
 
-    public function save(): RedirectResponse
+    public function save(): RedirectResponse|Redirector
     {
         $this->form->store();
 
-        return to_route('beers.index')
-            ->with('success', sprintf('%s criada com sucesso!', $this->form->name));
+        /** @var RedirectResponse|Redirector $res */
+        $res = to_route('beers.index')
+            ->success(sprintf('%s criada com sucesso!', $this->form->name));
+
+        return $res;
     }
 
     public function render(): ViewContract|ViewFactory
